@@ -70,13 +70,13 @@ or in bibtex format
 
 
 
-Demo جرّب
-====
+## Demo جرّب
+
 مكن التجربة على [موقع مشكال](http://tahadz.com/mishkal)
 ، اختر تشكيل، ثم مرّر الفأرة على الكلمة لرؤية التلميح
 
 You can test it on [Mishkal Site](http://tahadz.com/mishkal), choose: Tashkeel, and move mouse over word to get hint.
-![mysam-tagmanager Demo](doc/images/mysam_demo.png "mysam-tagmanager Demo")
+![mysam-tagmanager Demo](doc/images/mysam_demo.png alt="mysam-tagmanager)
 
 
 <!--
