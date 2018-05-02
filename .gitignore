@@ -1,2 +1,5 @@
 *.pyc
-doc/hmlt/*
+doc/html/*
+/doc/tagset.md.bak
+tests/output/*
+tests/samples/*
