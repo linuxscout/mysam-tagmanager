@@ -3,3 +3,6 @@ doc/html/*
 /doc/tagset.md.bak
 tests/output/*
 tests/samples/*
+build/*
+dist/*
+mysam_tagmanager.egg-info/*
