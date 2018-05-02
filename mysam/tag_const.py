@@ -28,7 +28,7 @@ from __future__ import (
     division,
     )
 import os
-CONFIG_FILE = os.path.join( os.path.dirname(__file__), "tag.config")
+CONFIG_FILE = os.path.join( os.path.dirname(__file__), "../config/tag.config")
 # stucture
 TAGS_CONFIG=u"""#Part;Pos;Attribute;خاصية;code;Value;قيمة;inflection;
 # Word Type نوع الكلمة

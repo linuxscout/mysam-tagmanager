@@ -7,17 +7,20 @@ def readme():
     with open('README.rst') as f:
         return f.read()
         
-setup (name='tagmanager', version='0.1',
+setup (name='mysam-tagmanager', version='0.1',
       author='Taha Zerrouki',
       author_email='taha_zerrouki@hotmail.com',
       url='http://pypi.python.com/projects/mysam-tagmanager/',
       license='GPL',
       description="Mysam: Arabic tags manager",
       long_description = readme(),
-      package_dir={'mysam': 'mysam',},
+      package_dir={'mysam': 'mysam','config':'config'},
       packages=['mysam'],
+      include_package_data=True,
+
       package_data = {
-        'pyarabic': ['doc/*.*','doc/html/*'],
+        'mysam': ['doc/*.*','doc/html/*', "config/tag.config"],
+        'mysam/config': ["config/tag.config"],
         },
       classifiers=[
           'Development Status :: 5 - Production/Stable',
