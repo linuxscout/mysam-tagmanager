@@ -26,8 +26,9 @@ import sys
 sys.path.append('../')
 sys.path.append('.')
 import os
-import mysam.tagconfig as tagconfig
 import mysam.tag_const as tag_const
+import mysam.tagconfig as tagconfig
+
 import os
 def main(args):
     import pandas as pd
@@ -41,9 +42,19 @@ def main(args):
     df2 = pd.DataFrame(tag_const.INVERSE_TAGSDICT)
     print('****inverse tagdict ****')
     print(df2)
-    df3 = pd.DataFrame(tag_const.INVERSE_TAGSDICT)
+    df3 = pd.DataFrame(tag_const.ATTR_TAGSDICT)
     print('****attr tagdict ****')
-
+    print(df3)
+    #~ df4 = pd.DataFrame(tag_const.TAGSMAP)
+    print('****Tags MAP ****')
+    #~ print(df4)
+    for k in tag_const.TAGSMAP:
+        line = u"#MAP:%s=%s"%(k, u';'.join(tag_const.TAGSMAP[k]))
+        print(line.encode('utf8'))
+    print('**** Structure ****')
+    print(tag_const.TAG_PARTS_SIZES)
+    print(configuer.tag_parts_sizes)
+    
 if __name__ == '__main__':
     import sys
     sys.exit(main(sys.argv))

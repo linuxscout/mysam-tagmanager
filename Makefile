@@ -30,7 +30,7 @@ wheel3:
 sdist:
 	python setup.py sdist
 upload:
-	echo "use twine upload dist/PyArabic-0.6.1.tar.gz"
+	echo "use twine upload dist/mysam-tagmanager-0.1.tar.gz"
 	
 test:
 	pytest pyarabic/test_araby.py

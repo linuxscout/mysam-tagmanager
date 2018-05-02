@@ -34,6 +34,8 @@ def main(args):
     print(md.encode('utf8'))
     mdc = configuer.markdown()
     print(mdc.encode('utf8'))  
+    mdm = configuer.markdown_map()
+    print(mdm.encode('utf8'))  
 
 if __name__ == '__main__':
     import sys

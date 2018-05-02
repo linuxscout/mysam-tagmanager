@@ -44,6 +44,13 @@ class tagConfig:
         # read config fist
         pass;
         #~ self.load_config()
+        self.tagsdict ={}
+        self.inverse_tagsdict ={}
+        self.attr_tagsdict= {}
+        self.tagsmap ={}
+        #parameters
+        self.tag_parts_sizes =[]
+
         self.lines =[]
     @staticmethod
     def str2int(nb):
@@ -58,7 +65,7 @@ class tagConfig:
         @param config_file: file to load
         @type config_file: string
         @param debug: it exist when file is not found
-        @typedebug: boolean
+        @type debug: boolean
         """
         # if given file, try to use it, else load
         if config_file:
@@ -77,7 +84,7 @@ class tagConfig:
 
         for line in self.lines:
             line = line.strip("\n")
-            if not line.startswith('#') and line:
+            if not line.startswith('#') and not line.startswith('$') and line:
                 alist = line.split(";")
                 alist = [x.strip() for x in alist]
                 # prepare keys
@@ -108,10 +115,29 @@ class tagConfig:
                 #attrib based index
                 self.attr_tagsdict[attr] = adict
                 self.attr_tagsdict[attr_ar] = adict
+            elif line.startswith('$PARAM:'):
+                alist = line[7:].split("=")
+                if len(alist) >= 2:
+                    field_name = alist[0]
+                    values = alist[1].split(";")
+                    if field_name == "TAG_PARTS_SIZES":
+                        self.tag_parts_sizes = [self.str2int(v) for v in values]
+            elif line.startswith('$MAP:'):
+                alist = line[5:].split("=")
+                if len(alist) >= 2:
+                    tag = alist[0]
+                    values = alist[1].split(";")
+                    self.tagsmap[tag] = values
+                
         # load on Global variables
         tag_const.TAGSDICT = self.tagsdict 
         tag_const.INVERSE_TAGSDICT =self.inverse_tagsdict 
         tag_const.ATTR_TAGSDICT =self.attr_tagsdict
+        # if structure not defined, the default structure is used.
+        if self.tag_parts_sizes:
+            tag_const.TAG_PARTS_SIZES = self.tag_parts_sizes
+        if self.tagsmap:
+            tag_const.TAGSMAP = self.tagsmap
 
     def markdown(self,):
         """ Dispaly rules and tags in markdown style.
@@ -130,7 +156,7 @@ class tagConfig:
         # avoid the first line
         for line in self.lines[1:]:
             line = line.strip('\n')
-            if line:
+            if line and not line.startswith('$'):
                 if line.startswith('##'):
                     # is a sub class 
                     pass;
@@ -153,11 +179,19 @@ class tagConfig:
         #~ lines = tag_const.TAGS_CONFIG.split("\n")
         textlines =[]
         textlines.append("# Description")
+        textlines.append("## Structure")
+        textlines.append("\tTAG_PARTS_SIZES=[%s]"%tag_const.TAG_PARTS_SIZES)
+        textlines.append("\tTAG_PARTS_SEP  ='%s'"%tag_const.TAG_PARTS_SEP)
+        structure = []
+        for i in range(len(tag_const.TAG_PARTS_SIZES)):
+            structure.append('-'*tag_const.TAG_PARTS_SIZES[i])
+        structure = tag_const.TAG_PARTS_SEP.join(structure)
+        textlines.append("\tStructure  =[%s]"%structure)
         textlines.append("## Parts")
 
         for line in self.lines[1:]:
             line = line.strip('\n')
-            if line:
+            if line and not line.startswith('$'):
                 if line.startswith('##'):
                     # is a sub class 
                     textlines.append(u'\t\t%s'%line[2:])
@@ -167,7 +201,7 @@ class tagConfig:
         textlines.append("## Detailled")
         for line in self.lines[1:]:
             line = line.strip('\n')
-            if line:
+            if line and not line.startswith('$'):
                 if line.startswith('##'):
                     # is a sub class 
                     textlines.append(u'\t%s:'%line[2:])
@@ -178,6 +212,24 @@ class tagConfig:
                     # print a sub category
                     alist = line.split(";") 
                     textlines.append("\t\t "+ u"%s: %s"%(alist[4], alist[5]))
+
+        
+        return u"\n".join(textlines)
+    def markdown_map(self,):
+        """ Dispaly MAP tags and tags in markdown style as categories.
+        read lines from load config, the create a Markdown text to document out tag ste system
+        @return: text.
+        @rtype: unicode text
+        """
+        textlines =[]
+        ## prepare the Mapping
+        textlines.append("\n# TAGS MAP")
+        textlines.append("Feature|maps")
+        textlines.append("-------|----")
+
+        for k in tag_const.TAGSMAP:
+            textlines.append("%s|%s"%(k, u', '.join(tag_const.TAGSMAP[k])))
+        
         return u"\n".join(textlines)
                     
 if __name__ == "__main__":

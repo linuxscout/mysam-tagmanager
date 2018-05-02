@@ -2,7 +2,46 @@
 
 
 تسيير وسوم الكلمات العربية،  ترميز وتفكيك
+هذه المكتبة توفر سكريبتا خاصا بترميز وسوم الكلمات (الخصائص الصرفية والنحوية والدلالية) في عبارة وسم مختصرة على شكل سلسلة حروف قصيرة مرمّزة نسميها سلسلة الوسوم.
+يمكن التحويل بين قائمة الوسوم وسلسة الوسوم المختص
+يمكن الاستفادة من هذه المكتبة من أجل ترميز الوسوم وفك ترميزها، سنستعملها في :
+
+ *  التحليل الصرفي ([مكتبة قلصادي](https://github.com/linuxscout/qalsadi) )
+ * التحليل النحوي ( [مكتبة ثعلب](https://github.com/linuxscout/thaalab-aranasyn) )
+ * التشكيل ( برنامج مشكال[برنامج مشكال](https://github.com/linuxscout/mishkal) [ برنامج مشكال](http://tahadz.com/mishkal) )
+ * التدقيق اللغوي النحوي (LanguageTool).
+
+كما تقدّم خدمة متميزة في **الإعراب بالطريقة القديمة **
+
+* قائمة الوسوم :
+	Noun, جامد, مضاف, مجرور, متحرك, ينون
+* سلسلة الوسوم المختصرة
+	[N--;--I-;---H;----]
+* جملة الإعراب
+{اسم مجرور وهو مضاف، والضمير المتصل مبني في محل جر مضاف إليه}
+
+
 Manage arabic words tags, encode, decode
+This library provides a script to encode POS tags (Words features : morphology, syntax, semantic), as a brief tag string  called tag string.
+We can convert between tag list <==> coded tag string.
+We plan to use it in:
+
+ * Morphology analysis  ([Qalsadi library](https://github.com/linuxscout/qalsadi) )
+ *  Syntactic analysis  ( [Thaalab Library](https://github.com/linuxscout/thaalab-aranasyn) )
+ * Tashkeel ( [Mishkal](https://github.com/linuxscout/mishkal) [Mishkal-site](http://tahadz.com/mishkal) )
+ * LanguageTool - Style and Grammar Checker [LanguageTool](https://languagetool.org/).
+
+It provides a special feature, make **traditional Inflection**.
+
+The conversion can be do like:
+
+ * Tags list:
+	Noun, جامد, مضاف, مجرور, متحرك, ينون
+ * Encoded tag string
+	[N--;--I-;---H;----]
+ * Inflection phrase
+{اسم مجرور وهو مضاف، والضمير المتصل مبني في محل جر مضاف إليه}
+
 
 ### Tagging System description
 You can look at tagging descripton on [doc/tagset.md](doc/tagset.md)
