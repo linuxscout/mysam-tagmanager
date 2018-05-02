@@ -14,13 +14,11 @@ setup (name='mysam-tagmanager', version='0.1',
       license='GPL',
       description="Mysam: Arabic tags manager",
       long_description = readme(),
-      package_dir={'mysam': 'mysam','config':'config'},
+      package_dir={'mysam': 'mysam'},
       packages=['mysam'],
       include_package_data=True,
-
       package_data = {
         'mysam': ['doc/*.*','doc/html/*', "config/tag.config"],
-        'mysam/config': ["config/tag.config"],
         },
       classifiers=[
           'Development Status :: 5 - Production/Stable',
