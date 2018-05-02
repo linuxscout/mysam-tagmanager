@@ -52,20 +52,27 @@ class tagConfig:
             return int(nb)
         except ValueError:
             return 0       
-    def load_config(self,):
-        """ Load config rules """
-        #~ with open(tag_const.CONFIG_FILE, 'r', encoding='utf-8') as infile:
-            #~ lines = infile.readline()
-        #~ with open(tag_const.CONFIG_FILE, 'r') as infile:
-            #~ lines = infile.readlines()
-        try:
-            with codecs.open(tag_const.CONFIG_FILE, 'r', encoding='utf-8') as infile:
-                self.lines = infile.readlines()
+    def load_config(self, config_file = False, debug=False):
+        """ Load config rules  from a file, or use default config file
+        You can find a tag.config like in doc directory
+        @param config_file: file to load
+        @type config_file: string
+        @param debug: it exist when file is not found
+        @typedebug: boolean
+        """
+        # if given file, try to use it, else load
+        if config_file:
+            try:
+                with codecs.open(config_file, 'r', encoding='utf-8') as infile:
+                    self.lines = infile.readlines()
 
-        except:
-            import sys
-            print("can't Open file", tag_const.CONFIG_FILE)
-            sys.exit()
+            except:
+                if debug:
+                    import sys
+                    print("can't Open file", config_file)
+                    sys.exit()
+                self.lines = tag_const.TAGS_CONFIG.split("\n")
+        else:
             self.lines = tag_const.TAGS_CONFIG.split("\n")
 
         for line in self.lines:

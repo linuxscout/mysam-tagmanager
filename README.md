@@ -120,6 +120,22 @@ value     1st person  2nd person  3rd person          Beh          FEH
 ....
 
 ```
+ You can load a specific config file by passing parameter to load_conf.
+If the file doesn't exist or failed to be open, the default config is loaded.
+
+```python
+configuer = tagconfig.tagConfig()
+configuer.load_config("tag.config")
+
+```
+If you want to know if the input file is opened, fix 'debug' parameter to 'True'
+
+
+If you want to know if the input file is open, fix 'debug' parameter to 'True'
+```python
+configuer = tagconfig.tagConfig()
+configuer.load_config("tag.config", debug=True)
+```
 
 ### Test call tagmaker
 

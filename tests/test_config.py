@@ -25,13 +25,15 @@
 import sys
 sys.path.append('../')
 sys.path.append('.')
+import os
 import mysam.tagconfig as tagconfig
 import mysam.tag_const as tag_const
-
+import os
 def main(args):
     import pandas as pd
     configuer = tagconfig.tagConfig()
-    configuer.load_config()
+    file_conf = os.path.join( os.path.dirname(__file__), "tag.config")
+    configuer.load_config(file_conf, debug=True)
     # display
     df = pd.DataFrame(tag_const.TAGSDICT)
     print('****tagdict ****')
