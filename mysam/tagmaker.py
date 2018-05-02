@@ -34,8 +34,6 @@ else:
     from . import tag_const 
     from . import tagconfig
 
-import pandas as pd
-
     
 class tagMaker:
     """
@@ -74,9 +72,9 @@ class tagMaker:
         @rtype: string
         """
         if type(obj) is dict:
-            return  repr(obj).replace("},","},\n").decode('unicode-escape') 
+            return  repr(obj).replace("},","},\n")
         else:
-            return  repr(obj).decode('unicode-escape')             
+            return  repr(obj)             
  
     def add(self, tag):
         """ add a new tag to the taglist
