@@ -116,8 +116,7 @@ or in bibtex format
 
 You can test it on [Mishkal Site](http://tahadz.com/mishkal), choose: Tashkeel, and move mouse over word to get hint.
 
-
-![mysam-tagmanager Demo](doc/images/mysam_demo.png alt="mysam-tagmanager")
+![mysam-tagmanager Demo](doc/images/mysam_demo.png)
 
 
 
