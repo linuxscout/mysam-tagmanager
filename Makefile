@@ -33,7 +33,7 @@ upload:
 	echo "use twine upload dist/mysam-tagmanager-0.1.tar.gz"
 	
 test:
-	pytest pyarabic/test_araby.py
+	cd tests; python test_maker.py
 tagsetdoc:
 	mv doc/tagset.md doc/tagset.md.bak
 	python tests/makedoc.py > doc/tagset.md
