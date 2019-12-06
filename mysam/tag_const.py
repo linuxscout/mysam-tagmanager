@@ -32,7 +32,7 @@ CONFIG_FILE = os.path.join( os.path.dirname(__file__), "config/tag.config")
 # stucture
 TAGS_CONFIG=u"""#Part;Pos;Attribute;خاصية;code;Value;قيمة;inflection;
 # Word Type نوع الكلمة
-1;1;word_type;نوع الكلمة;N;Noun;اسم;اسم;
+1;1;word_type;نوع الكلمة;n;Noun;اسم;اسم;
 1;1;word_type;نوع الكلمة;V;Verb;فعل;فعل;
 1;1;word_type;نوع الكلمة;T;Tool;أداة;حرف;
 1;1;word_type;نوع الكلمة;P;Punctuation;ترقيم;علامة ترقيم;

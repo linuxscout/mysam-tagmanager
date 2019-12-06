@@ -72,6 +72,7 @@ class tagConfig:
             try:
                 with codecs.open(config_file, 'r', encoding='utf-8') as infile:
                     self.lines = infile.readlines()
+                #~ print("load configfile with success")
 
             except:
                 if debug:
@@ -129,15 +130,15 @@ class tagConfig:
                     values = alist[1].split(";")
                     self.tagsmap[tag] = values
                 
-        # load on Global variables
-        tag_const.TAGSDICT = self.tagsdict 
-        tag_const.INVERSE_TAGSDICT =self.inverse_tagsdict 
-        tag_const.ATTR_TAGSDICT =self.attr_tagsdict
-        # if structure not defined, the default structure is used.
-        if self.tag_parts_sizes:
-            tag_const.TAG_PARTS_SIZES = self.tag_parts_sizes
-        if self.tagsmap:
-            tag_const.TAGSMAP = self.tagsmap
+        #~ # load on Global variables
+        #~ tag_const.TAGSDICT = self.tagsdict 
+        #~ tag_const.INVERSE_TAGSDICT =self.inverse_tagsdict 
+        #~ tag_const.ATTR_TAGSDICT =self.attr_tagsdict
+        #~ # if structure not defined, the default structure is used.
+        #~ if self.tag_parts_sizes:
+            #~ tag_const.TAG_PARTS_SIZES = self.tag_parts_sizes
+        #~ if self.tagsmap:
+            #~ tag_const.TAGSMAP = self.tagsmap
 
     def markdown(self,):
         """ Dispaly rules and tags in markdown style.
@@ -240,7 +241,7 @@ if __name__ == "__main__":
     sys.setdefaultencoding('utf-8')
     
     configuer = tagConfig()
-    configuer.load_config()
+    configuer.load_config("config/tag.config", debug=True)
     df = pd.DataFrame(tag_const.TAGSDICT)
     print('****tagdict ****')
     print(df)

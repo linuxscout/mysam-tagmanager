@@ -40,22 +40,53 @@ class tagMaker:
     Manage tags, create, code, decode a tag
     """
 
-    def __init__(self,):
+    def __init__(self, configfile = None):
         """Init tha class"""
-        # read config fist
+        # read config first
         #~ self.load_config()
-        if not tag_const.TAGSDICT:
-            configueur = tagconfig.tagConfig()
-            configueur.load_config()
+        if configfile:
+            #~ print("Load a config file")
+            configuer = tagconfig.tagConfig()
+            configuer.load_config(configfile)
+            # load on Global variables
+            self.tagsdict = configuer.tagsdict 
+            self.inverse_tagsdict =configuer.inverse_tagsdict 
+            self.attr_tagsdict =configuer.attr_tagsdict
+            # if structure not defined, the default structure is used.
+            if configuer.tag_parts_sizes:
+                self.tag_parts_sizes = configuer.tag_parts_sizes
+            else:
+                self.tag_parts_sizes = []
+            if configuer.tagsmap:
+                self.tagsmap = configuer.tagsmap
+            else:
+                self.tagsmap = configuer.tagsmap
+            self.tag_parts_sep = tag_const.TAG_PARTS_SEP
+                
+        else:
+            # load on Global variables
+            self.tagsdict = tag_const.TAGSDICT  
+            self.inverse_tagsdict  = tag_const.INVERSE_TAGSDICT 
+            self.attr_tagsdict = tag_const.ATTR_TAGSDICT 
+            # if structure not defined, the default structure is used.
+            self.tag_parts_sizes = tag_const.TAG_PARTS_SIZES
+            self.tag_parts_sep = tag_const.TAG_PARTS_SEP
+            self.tagsmap = tag_const.TAGSMAP
         # prepare the tag maker
         self.reset()
-        
+
+    
+    def set_config(self,configfile):
+        """ set a config to encode tags"""
+        configueur = tagconfig.tagConfig()
+        configueur.load_config(configfile)
+               
     def reset(self,):
         """ reset the taglist to make a new"""
         # init taglist
         self.taglist = []
-        for i in range(len(tag_const.TAG_PARTS_SIZES)):
-            self.taglist.append(['-']*tag_const.TAG_PARTS_SIZES[i])
+        for i in range(len(self.tag_parts_sizes)):
+            self.taglist.append(['-']*self.tag_parts_sizes[i])
 
     def __str__(self,):
         """ prepare list to be printed
@@ -64,7 +95,7 @@ class tagMaker:
         """
         # join sub lists without separater, 
         # the join parts by separator
-        return  tag_const.TAG_PARTS_SEP.join([u"".join(x) for x in self.taglist])
+        return  self.tag_parts_sep.join([u"".join(x) for x in self.taglist])
     @staticmethod
     def repr(obj):
         """ prepare list to be printed
@@ -94,19 +125,19 @@ class tagMaker:
         debug = False
         # if tag names are differents, it can contain many tags
         taglist =[]
-        if not tag in tag_const.TAGSDICT:
-            taglist = tag_const.TAGSMAP.get(tag,[])
+        if not tag in self.tagsdict:
+            taglist = self.tagsmap.get(tag,[])
             if debug: print("***",u";;".join(taglist).encode('utf8'))
         else:
             taglist =[tag,]
         # if the tag exist in tagsdict configuration
         # choose value and add it to a position
         for tg in taglist:
-            if tg in tag_const.TAGSDICT:
+            if tg in self.tagsdict:
                 if debug: print("***//",tg.encode('utf8'))
-                part = tag_const.TAGSDICT[tg]['part'] -1
-                pos = tag_const.TAGSDICT[tg]['pos']-1
-                code = tag_const.TAGSDICT[tg]['code']
+                part = self.tagsdict[tg]['part'] -1
+                pos = self.tagsdict[tg]['pos']-1
+                code = self.tagsdict[tg]['code']
                 self.taglist[part][pos] = code
 
 
@@ -149,7 +180,7 @@ class tagMaker:
         """
         if not tagstring:
             tagstring = self.__str__()
-        parts = tagstring.split(tag_const.TAG_PARTS_SEP)
+        parts = tagstring.split(self.tag_parts_sep)
         
         tags = []
         # read codes
@@ -158,8 +189,8 @@ class tagMaker:
                 code = part[i]
                 key = u":".join([str(ip+1), str(i+1), code])
                 #~ print key
-                tag = tag_const.INVERSE_TAGSDICT.get(key,{}).get('ar_value',"")
-                attr = tag_const.INVERSE_TAGSDICT.get(key,{}).get('ar_attr',"")
+                tag = self.inverse_tagsdict.get(key,{}).get('ar_value',"")
+                attr = self.inverse_tagsdict.get(key,{}).get('ar_attr',"")
                 if tag:
                     tags.append((attr, tag))
                 
@@ -167,7 +198,7 @@ class tagMaker:
         
     def inflect_noun(self, tagstring=False):
         """
-        get inflectionfor a noun
+        get inflection for a noun
         @param tagstring: a string tag to be decoded, if not given the internal tag string is decoded.
         @type tagstring: string
         @return: string
@@ -367,13 +398,13 @@ class tagMaker:
         """
         if not tagstring:
             tagstring = self.__str__()
-        parts = tagstring.split(tag_const.TAG_PARTS_SEP)
-        if tag not in tag_const.TAGSDICT:
+        parts = tagstring.split(self.tag_parts_sep)
+        if tag not in self.tagdict:
             return False
         else:
-            part = tag_const.TAGSDICT[tag]['part']
-            pos = tag_const.TAGSDICT[tag]['pos']
-            code = tag_const.TAGSDICT[tag]['code']
+            part = self.tagdict[tag]['part']
+            pos = self.tagdict[tag]['pos']
+            code = self.tagdict[tag]['code']
             if parts[part-1][pos-1] == code:
                 return True
             else:
@@ -436,18 +467,18 @@ class tagMaker:
         """
         if not tagstring:
             tagstring = self.__str__()
-        parts = tagstring.split(tag_const.TAG_PARTS_SEP)
-        if attr not in tag_const.ATTR_TAGSDICT:
+        parts = tagstring.split(self.tag_parts_sep)
+        if attr not in self.attr_tagsdict:
             return {}
         else:
-            part = tag_const.ATTR_TAGSDICT[attr]['part']
-            pos = tag_const.ATTR_TAGSDICT[attr]['pos']
+            part = self.attr_tagsdict[attr]['part']
+            pos = self.attr_tagsdict[attr]['pos']
             code = parts[part-1][pos-1]
             if code == '-':
                 return {}
             else:
                 key = u":".join([str(part), str(pos), code])
-                return tag_const.INVERSE_TAGSDICT.get(key,{})
+                return self.inverse_tagsdict.get(key,{})
         return {}
 
 
@@ -458,8 +489,10 @@ if __name__ == "__main__":
                 u'المضارع المعلوم:هو:::n:'.split(":"),
                 u':مضاف:مجرور:متحرك:ينون:::'.split(':'),
                 ]
+    tag_maker = tagMaker("config/tag.config")
+
     for taglist in taglists:
-        tag_maker = tagMaker()
+        tag_maker.reset()
         tag_maker.encode(taglist)
         print(u"+".join(taglist).encode('utf8'))
         tagstr = str(tag_maker)
