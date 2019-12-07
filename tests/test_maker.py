@@ -25,7 +25,7 @@
 import sys
 sys.path.append('../')
 
-from mysam.tagmaker as tagmaker
+import mysam.tagmaker as tagmaker
 
 
 def main(args):
