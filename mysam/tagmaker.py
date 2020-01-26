@@ -399,12 +399,12 @@ class tagMaker:
         if not tagstring:
             tagstring = self.__str__()
         parts = tagstring.split(self.tag_parts_sep)
-        if tag not in self.tagdict:
+        if tag not in self.tagsdict:
             return False
         else:
-            part = self.tagdict[tag]['part']
-            pos = self.tagdict[tag]['pos']
-            code = self.tagdict[tag]['code']
+            part = self.tagsdict[tag]['part']
+            pos = self.tagsdict[tag]['pos']
+            code = self.tagsdict[tag]['code']
             if parts[part-1][pos-1] == code:
                 return True
             else:
@@ -484,7 +484,7 @@ class tagMaker:
 
             
 if __name__ == "__main__":
-    taglists = [[u'اسم', u'هاء', u'مجرور',],
+    taglists = [[u'اسم', u'هاء', u'مجرور',"مصدر"],
                 u'تعريف::مرفوع:متحرك:ينون:::'.split(":"),
                 u'المضارع المعلوم:هو:::n:'.split(":"),
                 u':مضاف:مجرور:متحرك:ينون:::'.split(':'),
