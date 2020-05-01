@@ -16,9 +16,9 @@
 ![TAG STRINGS](doc/images/mysam_sample.png  "Example")
 
 * قائمة الوسوم :
-	Noun, جامد, مضاف, مجرور, متحرك, ينون
+    Noun, جامد, مضاف, مجرور, متحرك, ينون
 * سلسلة الوسوم المختصرة
-	[N--;--I-;---H;----]
+    [N--;--I-;---H;----]
 * جملة الإعراب
 {اسم مجرور وهو مضاف، والضمير المتصل مبني في محل جر مضاف إليه}
 
@@ -40,9 +40,9 @@ It provides a special feature, make **traditional Inflection**.
 The conversion can be do like:
 
  * Tags list:
-	Noun, جامد, مضاف, مجرور, متحرك, ينون
+    Noun, جامد, مضاف, مجرور, متحرك, ينون
  * Encoded tag string
-	[N--;--I-;---H;----]
+    [N--;--I-;---H;----]
  * Inflection phrase
 {اسم مجرور وهو مضاف، والضمير المتصل مبني في محل جر مضاف إليه}
 
@@ -59,7 +59,7 @@ You can look at tagging descripton on [doc/tagset.md](doc/tagset.md)
 Features |   value
 ------------|-----------
 Authors  | Taha Zerrouki: http://tahadz.com,  taha dot zerrouki at gmail dot com
-Release  | 0.1
+Release  | 0.2
 License  |[GPL](https://github.com/linuxscout/mysam-tagmanager/master/LICENSE)
 Tracker  |[linuxscout/mysam-tagmanager/Issues](https://github.com/linuxscout/mysam-tagmanager/issues)
 Website  |[https://pypi.python.org/pypi/mysam-tagmanager](https://pypi.python.org/pypi/mysam-tagmanager)
