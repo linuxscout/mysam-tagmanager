@@ -1,8 +1,59 @@
 Mysam: Arabic tags manager, ميسم: إدارة الوسوم العربية
 ======================================================
 
-تسيير وسوم الكلمات العربية، ترميز وتفكيك Manage arabic words tags,
-encode, decode
+تسيير وسوم الكلمات العربية في مجال المعالجة الآلية للغة، ترميز وتفكيك
+هذه المكتبة توفر سكريبتا خاصا بترميز وسوم الكلمات (الخصائص الصرفية
+والنحوية والدلالية) في عبارة وسم مختصرة على شكل سلسلة حروف قصيرة مرمّزة
+نسميها سلسلة الوسوم. يمكن التحويل بين قائمة الوسوم وسلسة الوسوم المختص
+يمكن الاستفادة من هذه المكتبة من أجل ترميز الوسوم وفك ترميزها، سنستعملها
+في :
+
+-  التحليل الصرفي (`مكتبة
+   قلصادي <https://github.com/linuxscout/qalsadi>`__ )
+-  التحليل النحوي ( `مكتبة
+   ثعلب <https://github.com/linuxscout/thaalab-aranasyn>`__ )
+-  التشكيل ( برنامج مشكال\ `برنامج
+   مشكال <https://github.com/linuxscout/mishkal>`__ `برنامج
+   مشكال <http://tahadz.com/mishkal>`__ )
+-  التدقيق اللغوي النحوي (LanguageTool).
+
+
+كما تقدّم خدمة متميزة في الإعراب بالطريقة القديمة 
+
+
+
+
+-  قائمة الوسوم : Noun, جامد, مضاف, مجرور, متحرك, ينون
+-  سلسلة الوسوم المختصرة [N--;--I-;---H;----]
+-  جملة الإعراب {اسم مجرور وهو مضاف، والضمير المتصل مبني في محل جر مضاف
+   إليه}
+
+\*\* هذه ليست مكتبة للتوسيم، بل لإدارة الوسوم في معالجة اللغة\*\*
+
+Manage arabic words tags, encode, decode This library provides a script
+to encode POS tags (Words features : morphology, syntax, semantic), as a
+brief tag string called tag string. We can convert between tag list <==>
+coded tag string. We plan to use it in:
+
+-  Morphology analysis (`Qalsadi
+   library <https://github.com/linuxscout/qalsadi>`__ )
+-  Syntactic analysis ( `Thaalab
+   Library <https://github.com/linuxscout/thaalab-aranasyn>`__ )
+-  Tashkeel ( `Mishkal <https://github.com/linuxscout/mishkal>`__
+   `Mishkal-site <http://tahadz.com/mishkal>`__ )
+-  LanguageTool - Style and Grammar Checker
+   `LanguageTool <https://languagetool.org/>`__.
+
+It provides a special feature, make **traditional Inflection**.
+
+The conversion can be do like:
+
+-  Tags list: Noun, جامد, مضاف, مجرور, متحرك, ينون
+-  Encoded tag string [N--;--I-;---H;----]
+-  Inflection phrase {اسم مجرور وهو مضاف، والضمير المتصل مبني في محل جر
+   مضاف إليه}
+
+\*\* This not a Tagger library, but, a tags mangger for NLP \*\*
 
 Tagging System description
 --------------------------
@@ -24,7 +75,7 @@ dot com
 |               | gmail dot    |
 |               | com          |
 +---------------+--------------+
-| Release       | 0.1          |
+| Release       | 0.2          |
 +---------------+--------------+
 | License       | `GPL <https: |
 |               | //github.com |
@@ -72,34 +123,7 @@ dot com
 |               | ger/)        |
 +---------------+--------------+
 
-.. raw:: html
 
-   <!--Doc  |[package Documentaion](http://pythonhosted.org/mysam-tagmanager/)-->
-
-.. raw:: html
-
-   <!--Download  |[pypi.python.org](https://pypi.python.org/pypi/mysam-tagmanager)-->
-
-.. raw:: html
-
-   <!--
-   ## Citation
-   If you would cite it in academic work, can you use this citation
-   ```
-   T. Zerrouki‏, mysam-tagmanager,  Arabic Word Tagger,
-     https://pypi.python.org/pypi/mysam-tagmanager/, 2018
-   ```
-   or in bibtex format
-
-   ```bibtex
-   @misc{zerrouki2012mysam,
-     title={mysam-tagmanager : Arabic Word Tagger},
-     author={Zerrouki, Taha},
-     url={https://pypi.python.org/pypi/mysam-tagmanager,
-     year={2010}
-   }
-   ```
-   -->
 
 مزايا
 -----
@@ -134,21 +158,21 @@ Applications
 Demo جرّب
 ---------
 
-مكن التجربة على `موقع مشكال <http://tahadz.com/mishkal>`__ ، اختر تشكيل،
-ثم مرّر الفأرة على الكلمة لرؤية التلميح
+يمكن التجربة على `موقع مشكال <http://tahadz.com/mishkal>`__ ، اختر
+تشكيل، ثم مرّر الفأرة على الكلمة لرؤية التلميح
 
 You can test it on `Mishkal Site <http://tahadz.com/mishkal>`__, choose:
-Tashkeel, and move mouse over word to get hint. |mysam-tagmanager Demo|
+Tashkeel, and move mouse over word to get hint.
 
-.. raw:: html
 
-   <!--
-   Installation
-   =====
-   ```
-   pip install mysam-tagmanager
-   ```    
-       -->
+
+
+Installation
+============
+```
+pip install mysam-tagmanager
+```    
+
 
 Usage
 -----
@@ -187,6 +211,26 @@ Test load configuration
     value     1st person  2nd person  3rd person          Beh          FEH   
     ....
     ....
+
+You can load a specific config file by passing parameter to load\_conf.
+If the file doesn't exist or failed to be open, the default config is
+loaded.
+
+.. code:: python
+
+    configuer = tagconfig.tagConfig()
+    configuer.load_config("tag.config")
+
+If you want to know if the input file is opened, fix 'debug' parameter
+to 'True'
+
+If you want to know if the input file is open, fix 'debug' parameter to
+'True'
+
+.. code:: python
+
+    configuer = tagconfig.tagConfig()
+    configuer.load_config("tag.config", debug=True)
 
 Test call tagmaker
 ~~~~~~~~~~~~~~~~~~
@@ -252,5 +296,3 @@ Exmaple for has tag
     >>> tag_search = u"مجرور"
     >>> print(tag_maker.has_tag(tag_search, tagcode))
     True
-
-.. |mysam-tagmanager Demo| image:: doc/images/mysam_demo.png%20alt=%22mysam-tagmanager
