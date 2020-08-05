@@ -18,7 +18,7 @@ setup (name='mysam-tagmanager', version='0.3',
       packages=['mysam'],
       include_package_data=True,
       package_data = {
-        'mysam': ['doc/*.*','doc/html/*', "config/tag.config"],
+        'mysam': ['doc/*.*','doc/html/*', "config/*"],
         },
       classifiers=[
           'Development Status :: 5 - Production/Stable',

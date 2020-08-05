@@ -28,7 +28,7 @@ wheel:
 wheel3:
 	python3 setup.py bdist_wheel
 sdist:
-	python setup.py sdist
+	python3 setup.py sdist
 upload:
 	echo "use twine upload dist/mysam-tagmanager-0.1.tar.gz"
 	
