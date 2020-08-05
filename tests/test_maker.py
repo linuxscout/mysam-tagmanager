@@ -36,13 +36,15 @@ def main(args):
                 u':مضاف:مجرور:متحرك:ينون:::'.split(':'),
                 ]
     for taglist in taglists:
+        #~ tag_maker = tagmaker.tagMaker("tag.config")
         tag_maker = tagmaker.tagMaker()
+        tag_maker.reset()
         tag_maker.encode(taglist)
-        print(u"+".join(taglist).encode('utf8'))
+        print(u"+".join(taglist))
         tagstr = str(tag_maker)
-        print(tagstr.encode('utf8'))
+        print(tagstr)
         # decode a unifed tag string
-        print(tag_maker.repr(tag_maker.decode()).encode('utf8'))
+        print(tag_maker.decode())
 
 
 if __name__ == '__main__':

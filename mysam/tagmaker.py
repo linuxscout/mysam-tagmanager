@@ -27,6 +27,7 @@ from __future__ import (
     unicode_literals,
     division,
     )
+import os
 if __name__ == "__main__":
     import tag_const 
     import tagconfig
@@ -44,14 +45,17 @@ class tagMaker:
         """Init tha class"""
         # read config first
         #~ self.load_config()
+        if not configfile:
+            # get specific config file
+            configfile = os.path.join(os.path.dirname(__file__) , "config/tag.config")
         if configfile:
             #~ print("Load a config file")
             configuer = tagconfig.tagConfig()
             configuer.load_config(configfile)
             # load on Global variables
             self.tagsdict = configuer.tagsdict 
-            self.inverse_tagsdict =configuer.inverse_tagsdict 
-            self.attr_tagsdict =configuer.attr_tagsdict
+            self.inverse_tagsdict = configuer.inverse_tagsdict 
+            self.attr_tagsdict = configuer.attr_tagsdict
             # if structure not defined, the default structure is used.
             if configuer.tag_parts_sizes:
                 self.tag_parts_sizes = configuer.tag_parts_sizes

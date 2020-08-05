@@ -7,7 +7,7 @@ def readme():
     with open('README.rst') as f:
         return f.read()
         
-setup (name='mysam-tagmanager', version='0.2',
+setup (name='mysam-tagmanager', version='0.3',
       author='Taha Zerrouki',
       author_email='taha_zerrouki@hotmail.com',
       url='http://pypi.python.com/projects/mysam-tagmanager/',
