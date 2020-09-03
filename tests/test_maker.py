@@ -40,7 +40,7 @@ def main(args):
         tag_maker = tagmaker.tagMaker()
         tag_maker.reset()
         tag_maker.encode(taglist)
-        print(u"+".join(taglist))
+        print(u":".join(taglist))
         tagstr = str(tag_maker)
         print(tagstr)
         # decode a unifed tag string

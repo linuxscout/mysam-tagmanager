@@ -24,18 +24,18 @@ md2html:
 	pandoc -s -r markdown -w html README.md -o README.html
 	
 wheel:
-	python setup.py bdist_wheel
+	sudo python3 setup.py bdist_wheel
 wheel3:
-	python3 setup.py bdist_wheel
+	sudo python3 setup.py bdist_wheel
 sdist:
-	python3 setup.py sdist
+	sudo python3 setup.py sdist
 upload:
 	echo "use twine upload dist/mysam-tagmanager-0.1.tar.gz"
 	
 test:
-	cd tests; python test_maker.py
+	cd tests; python3 test_maker.py
 tagsetdoc:
 	mv doc/tagset.md doc/tagset.md.bak
-	python tests/makedoc.py > doc/tagset.md
+	python3 tests/makedoc.py > doc/tagset.md
 doc:
 	epydoc -v --config epydoc.conf

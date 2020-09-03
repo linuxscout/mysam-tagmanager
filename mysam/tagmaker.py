@@ -45,6 +45,8 @@ class tagMaker:
         """Init tha class"""
         # read config first
         #~ self.load_config()
+        self.debug = False
+        self.lang ="ar"
         if not configfile:
             # get specific config file
             configfile = os.path.join(os.path.dirname(__file__) , "config/tag.config")
@@ -120,29 +122,31 @@ class tagMaker:
             >>> tag_maker.add(tag_new)
             >>> tag_new = u"اسم"
             >>> tag_maker.add(tag_new)
-            >>> print(str(tag_maker).encode('utf8'))
+            >>> print(str(tag_maker))
             N--;----;--L-;----
         
         @param tag: a tag 
         @type tag: unicode
         """
-        debug = False
+        debug = self.debug
         # if tag names are differents, it can contain many tags
         taglist =[]
         if not tag in self.tagsdict:
             taglist = self.tagsmap.get(tag,[])
-            if debug: print("***",u";;".join(taglist).encode('utf8'))
+            if debug: print("***",u";;".join(taglist))
         else:
             taglist =[tag,]
         # if the tag exist in tagsdict configuration
         # choose value and add it to a position
         for tg in taglist:
             if tg in self.tagsdict:
-                if debug: print("***//",tg.encode('utf8'))
+                if debug: print("***//",tg)
                 part = self.tagsdict[tg]['part'] -1
                 pos = self.tagsdict[tg]['pos']-1
                 code = self.tagsdict[tg]['code']
                 self.taglist[part][pos] = code
+            else:
+                if debug: print("***Unrecoginzed tag//",tg)
 
 
     def encode(self, taglist = []):
@@ -185,7 +189,13 @@ class tagMaker:
         if not tagstring:
             tagstring = self.__str__()
         parts = tagstring.split(self.tag_parts_sep)
-        
+        if self.lang == "ar":
+            value_key = 'ar_value'
+            attr_key = 'ar_attr'
+        else:
+            value_key = 'value'
+            attr_key = 'attr'
+            
         tags = []
         # read codes
         for ip, part in enumerate(parts):
@@ -193,8 +203,8 @@ class tagMaker:
                 code = part[i]
                 key = u":".join([str(ip+1), str(i+1), code])
                 #~ print key
-                tag = self.inverse_tagsdict.get(key,{}).get('ar_value',"")
-                attr = self.inverse_tagsdict.get(key,{}).get('ar_attr',"")
+                tag = self.inverse_tagsdict.get(key,{}).get(value_key,"")
+                attr = self.inverse_tagsdict.get(key,{}).get(attr_key,"")
                 if tag:
                     tags.append((attr, tag))
                 
@@ -278,7 +288,7 @@ class tagMaker:
         return u" ".join(inflct)
     def inflect_verb(self, tagstring):
         """
-        get inflectionfor a noun
+        get inflection for a noun
         @param tagstring: a string tag to be decoded, if not given the internal tag string is decoded.
         @type tagstring: string
         @return: string
@@ -294,7 +304,7 @@ class tagMaker:
              #مبتدأ مرفوع وعلامة رفعه الواو لأنه جمع مذكر سالم
             # case
             case = self.get_inflect(u'إعراب', tagstring)
-            #~ print((u"###%s####"%case).encode('utf8'), tagstring)
+            #~ print((u"###%s####"%case), tagstring)
             if case:
                 case_part = u"فعل %s"%case
                 inflct.append(case_part)
@@ -338,7 +348,7 @@ class tagMaker:
                     inflct.append(cause_part)
                 #attached pronoun
                 add_p = self.get_inflect(u'ضمير متصل', tagstring)
-                #~ print((u"H###%s####"%add_p).encode('utf8'))
+                #~ print((u"H###%s####"%add_p))
                 if add_p:
                     add_part = u"%s في محل نصب مفعول به"%add_p
                     inflct.append(add_part)
@@ -359,7 +369,7 @@ class tagMaker:
         Example:
             >>> tag_maker = tagmaker.tagMaker()
             >>> tagcode = 'N--;--I-;----;---'
-            >>> print(tag_maker.inflect(tagcode).encode('utf8'))
+            >>> print(tag_maker.inflect(tagcode))
             اسم مجرور وعلامة جرّه الياء لأنه جمع مذكر سالم وهو مضاف، والضمير المتصل مبني في محل جر مضاف إليه
         
         @param tagstring: a string tag to be decoded, if not given the internal tag string is decoded.
@@ -392,7 +402,7 @@ class tagMaker:
             >>> tag_maker.add(tag_new)
             >>> tag_new = u"اسم"
             >>> tag_maker.add(tag_new)
-            >>> print(str(tag_maker).encode('utf8'))
+            >>> print(str(tag_maker))
             N--;----;--L-;----
         
         @param tagstring: a string tag to be decoded, if not given the internal tag string is decoded.
@@ -440,7 +450,10 @@ class tagMaker:
         """
         deco = self.decode_attr(attr, tagstring)
         if deco: 
-            return deco.get('ar_value','')
+            if self.lang == "ar":
+                return deco.get('ar_value','')
+            else:
+                return deco.get('value','')
         return ''
 
     def get_inflect(self, attr, tagstring=False):
@@ -498,11 +511,11 @@ if __name__ == "__main__":
     for taglist in taglists:
         tag_maker.reset()
         tag_maker.encode(taglist)
-        print(u"+".join(taglist).encode('utf8'))
+        print(u"+".join(taglist))
         tagstr = str(tag_maker)
-        print(tagstr.encode('utf8'))
+        print(tagstr)
         # decode a unifed tag string
-        print(tag_maker.repr(tag_maker.decode()).encode('utf8'))
+        print(tag_maker.repr(tag_maker.decode()))
     
     
     
