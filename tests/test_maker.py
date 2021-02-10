@@ -23,9 +23,10 @@
 #  
 
 import sys
-sys.path.append('../')
+sys.path.append('../mysam')
 
-import mysam.tagmaker as tagmaker
+import tagmaker
+import tagcoder
 
 
 def main(args):
@@ -35,18 +36,31 @@ def main(args):
                 u'المضارع المعلوم:هو:::n:'.split(":"),
                 u':مضاف:مجرور:متحرك:ينون:::'.split(':'),
                 ]
+    tag_maker = tagmaker.tagMaker()                
     for taglist in taglists:
         #~ tag_maker = tagmaker.tagMaker("tag.config")
-        tag_maker = tagmaker.tagMaker()
         tag_maker.reset()
-        tag_maker.encode(taglist)
+        tag_maker._encode(taglist)
         print(u":".join(taglist))
         tagstr = str(tag_maker)
         print(tagstr)
         # decode a unifed tag string
-        print(tag_maker.decode())
-
-
+        print(tag_maker._decode())
+    print("****TagCoder****")
+    tag_coder = tagcoder.tagCoder()
+    for taglist in taglists:
+        tagstr = tag_coder.encode(taglist)
+        print(u":".join(taglist))
+        print(tagstr)
+        # decode a unifed tag string
+        taglist_decoded = tag_coder.decode(tagstr)
+        print(taglist_decoded)
+        taglist_decoded = [y for (x,y) in taglist_decoded ]
+        print(taglist_decoded)
+        # test if error
+        tagstr2 = tag_coder.encode(taglist_decoded)
+        if tagstr2!= tagstr:
+            print("error on decoding\n%s\n%s"%(tagstr, tagstr2))
 if __name__ == '__main__':
     import sys
     sys.exit(main(sys.argv))

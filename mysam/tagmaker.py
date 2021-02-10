@@ -28,10 +28,12 @@ from __future__ import (
     division,
     )
 import os
-if __name__ == "__main__":
+# ~ if __name__ == "__main__":
+    
+try:
     import tag_const 
     import tagconfig
-else:
+except:
     from . import tag_const 
     from . import tagconfig
 
@@ -149,7 +151,7 @@ class tagMaker:
                 if debug: print("***Unrecoginzed tag//",tg)
 
 
-    def encode(self, taglist = []):
+    def _encode(self, taglist = []):
         """Encode  a tag list into string tag.
         
         Example:
@@ -172,7 +174,7 @@ class tagMaker:
             self.add(tag)
         return self.__str__()
         
-    def decode(self, tagstring = False):
+    def _decode(self, tagstring = False):
         """Decode a string tag to get all tags
         Example:
             >>> import mysam.tagmaker as tagmaker
