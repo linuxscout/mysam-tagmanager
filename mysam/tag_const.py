@@ -21,12 +21,6 @@
 #  MA 02110-1301, USA.
 #  
 #  
-from __future__ import (
-    absolute_import,
-    print_function,
-    unicode_literals,
-    division,
-    )
 import os
 CONFIG_FILE = os.path.join( os.path.dirname(__file__), "config/tag.config")
 # stucture
@@ -195,7 +189,7 @@ TAGSMAP = {
 , u"هم" : [u'غائب', u'مذكر',  u'جمع']
 , u"هن" : [u'غائب', u'مؤنث',  u'جمع'],
 #TENSE_FEATURES = [
-TensePast : [ u'ماضي', u'معلوم',  ],
+TensePast : [ u'ماضي', u'معلوم',  u"مبني"],
 TenseFuture : [ u'مضارع', u'معلوم', u'مرفوع',  ],
 TenseImperative : [ u'أمر', ],
 TenseConfirmedImperative : [ u'أمر',  u'مؤكذ', ],
@@ -204,7 +198,7 @@ TenseSubjunctiveFuture : [ u'مضارع', u'معلوم', u'منصوب',  ],
 TenseConfirmedFuture : [ u'مضارع', u'معلوم',  u'مؤكد', ],
 
 
-TensePassivePast :  [ u'ماضي', u'مجهول', ],
+TensePassivePast :  [ u'ماضي', u'مجهول', u"مبني"],
 TensePassiveFuture : [ u'مضارع', u'مجهول', u'مرفوع',  ],
 TensePassiveJussiveFuture : [ u'مضارع', u'مجهول', u'مجزوم',  ],
 TensePassiveSubjunctiveFuture : [ u'مضارع', u'مجهول', u'منصوب',  ], 
@@ -219,9 +213,3 @@ u"y": [u'متعدي'],
 u"مضاف": [u'ضمير متصل'],
 
 }
-
-# you must call tag_config class to load tags indexes 
-if __name__ == "__main__":
-    print("""Test ir from tag_config to load configuration
-    Call it from tagmaker
-    """)

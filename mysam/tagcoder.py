@@ -21,15 +21,9 @@
 #  MA 02110-1301, USA.
 #  
 #  
-from __future__ import (
-    absolute_import,
-    print_function,
-    unicode_literals,
-    division,
-    )
+
 import os
-# ~ if __name__ == "__main__":
-    
+   
 try:
     import tag_const 
     import tagconfig
@@ -75,6 +69,7 @@ class tagCoder(tagmaker.tagMaker):
             self.add(tag)
         
         return self.__str__()
+        
     def decode(self, tagstring):
         """Decode a string tag to get all tags
         Example:

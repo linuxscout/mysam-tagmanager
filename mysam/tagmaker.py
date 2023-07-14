@@ -21,15 +21,9 @@
 #  MA 02110-1301, USA.
 #  
 #  
-from __future__ import (
-    absolute_import,
-    print_function,
-    unicode_literals,
-    division,
-    )
 import os
 # ~ if __name__ == "__main__":
-    
+
 try:
     import tag_const 
     import tagconfig
@@ -81,6 +75,12 @@ class tagMaker:
             self.tag_parts_sep = tag_const.TAG_PARTS_SEP
             self.tagsmap = tag_const.TAGSMAP
         # prepare the tag maker
+        # inverse tag map
+        self.inverse_tagsmap = {}
+        for key in self.tagsmap:
+            newkey = "-".join(self.tagsmap[key])
+            newvalue = key
+            self.inverse_tagsmap[newkey]= newvalue
         self.reset()
 
     
@@ -288,6 +288,7 @@ class tagMaker:
                 if word_type:
                     inflct.append(word_type)  
         return u" ".join(inflct)
+        
     def inflect_verb(self, tagstring):
         """
         get inflection for a noun
@@ -304,11 +305,17 @@ class tagMaker:
              # مفعول به منصوب وعلامة نصبه الفتحة
              #نعت منصوب وعلامةنصبه الياء لأنه مثنى
              #مبتدأ مرفوع وعلامة رفعه الواو لأنه جمع مذكر سالم
+            # tense:
+            tense = self.get_inflect(u'زمن', tagstring)
+            voice = self.get_inflect(u'بناء', tagstring)
+            inflct.append(u"فعل") 
+            inflct.append(tense) 
+            inflct.append(voice) 
             # case
             case = self.get_inflect(u'إعراب', tagstring)
             #~ print((u"###%s####"%case), tagstring)
             if case:
-                case_part = u"فعل %s"%case
+                case_part = case
                 inflct.append(case_part)
 
                 # inflect Mark
@@ -363,6 +370,7 @@ class tagMaker:
         """
         """
         return u""
+
     def inflect(self, tagstring = False):
         """
         Display inlfection in traditional way

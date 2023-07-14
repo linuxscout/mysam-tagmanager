@@ -21,12 +21,6 @@
 #  MA 02110-1301, USA.
 #  
 #  
-from __future__ import (
-    absolute_import,
-    print_function,
-    unicode_literals,
-    division,
-    )
 try:
     from . import tag_const 
 except:
