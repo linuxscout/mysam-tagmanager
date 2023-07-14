@@ -34,6 +34,8 @@ upload:
 	
 test:
 	cd tests; python3 test_maker.py
+test_unit:
+	cd tests; python3 -m pytest test_unit_tagcoder.py
 tagsetdoc:
 	mv doc/tagset.md doc/tagset.md.bak
 	python3 tests/makedoc.py > doc/tagset.md
