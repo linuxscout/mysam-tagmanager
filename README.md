@@ -1,8 +1,7 @@
 # Mysam: Arabic tags manager, ميسم: إدارة الوسوم  العربية
 
-
 تسيير وسوم الكلمات العربية في مجال المعالجة الآلية للغة،  ترميز وتفكيك
-هذه المكتبة توفر سكريبتا خاصا بترميز وسوم الكلمات (الخصائص الصرفية والنحوية والدلالية) في عبارة وسم مختصرة على شكل سلسلة حروف قصيرة مرمّزة نسميها سلسلة الوسوم.
+هذه المكتبة توفر سكريبت خاصا بترميز وسوم الكلمات (الخصائص الصرفية والنحوية والدلالية) في عبارة وسم مختصرة على شكل سلسلة حروف قصيرة مرمّزة نسميها سلسلة الوسوم.
 يمكن التحويل بين قائمة الوسوم وسلسة الوسوم المختص
 يمكن الاستفادة من هذه المكتبة من أجل ترميز الوسوم وفك ترميزها، سنستعملها في :
 
@@ -59,7 +58,7 @@ You can look at tagging descripton on [doc/tagset.md](doc/tagset.md)
 Features |   value
 ------------|-----------
 Authors  | Taha Zerrouki: http://tahadz.com,  taha dot zerrouki at gmail dot com
-Release  | 0.2
+Release  | 0.4 
 License  |[GPL](https://github.com/linuxscout/mysam-tagmanager/master/LICENSE)
 Tracker  |[linuxscout/mysam-tagmanager/Issues](https://github.com/linuxscout/mysam-tagmanager/issues)
 Website  |[https://pypi.python.org/pypi/mysam-tagmanager](https://pypi.python.org/pypi/mysam-tagmanager)
@@ -70,9 +69,6 @@ Accounts  |[@Twitter](https://twitter.com/linuxscout)  [@Sourceforge](http://sou
 <!--Doc  |[package Documentaion](http://pythonhosted.org/mysam-tagmanager/)-->
 <!--Download  |[pypi.python.org](https://pypi.python.org/pypi/mysam-tagmanager)-->
 
-
-
-<!--
 ## Citation
 If you would cite it in academic work, can you use this citation
 ```
@@ -82,14 +78,14 @@ T. Zerrouki‏, mysam-tagmanager,  Arabic Word Tagger,
 or in bibtex format
 
 ```bibtex
-@misc{zerrouki2012mysam,
+@misc{zerrouki2018mysam,
   title={mysam-tagmanager : Arabic Word Tagger},
   author={Zerrouki, Taha},
   url={https://pypi.python.org/pypi/mysam-tagmanager,
-  year={2010}
+  year={2018}
 }
 ```
--->
+
 
 ## مزايا
 * ترميز المزايا إلى وسم موحد مختصر
@@ -124,15 +120,11 @@ You can test it on [Mishkal Site](http://tahadz.com/mishkal), choose: Tashkeel, 
 
 ![mysam-tagmanager Demo](doc/images/mysam_demo.png)
 
-
-
-<!--
 Installation
 =====
-```
+```python
 pip install mysam-tagmanager
-```    
-    -->
+```
 ## Usage
 
 ```python
@@ -143,31 +135,35 @@ import mysam.tagmaker as tagmaker
 ### Test load configuration
 
 ```python
+import pandas as pd
+
 import mysam.tagconfig as tagconfig
 import mysam.tag_const as tag_const
-import pandas as pd
+
 configuer = tagconfig.tagConfig()
 configuer.load_config()
 # display
-df = pd.DataFrame(tag_const.TAGSDICT)
+df = pd.DataFrame(configuer.tagsdict)
 print('****tagdict ****')
 print(df)
 *****Result *****
 ****tagdict ****
-          1st person  2nd person  3rd person          Beh          FEH  \
-ar_attr          شخص         شخص         شخص           جر          عطف   
-ar_value       متكلم       مخاطب        غائب          باء        الفاء   
-attr          person      person      person  preposition  conjonction   
-code               I           Y           H            B            F   
-inflect                                            بالباء                
-part               4           4           4            3            3   
-pos                4           4           4            2            1   
-value     1st person  2nd person  3rd person          Beh          FEH   
+                 اسم        Noun         فعل        Verb        أداة  ...  1st person       مخاطب  2nd person        غائب  3rd person
+part               1           1           1           1           1  ...           4           4           4           4           4
+pos                1           1           1           1           1  ...           4           4           4           4           4
+attr       word_type   word_type   word_type   word_type   word_type  ...      person      person      person      person      person
+ar_attr   نوع الكلمة  نوع الكلمة  نوع الكلمة  نوع الكلمة  نوع الكلمة  ...         شخص         شخص         شخص         شخص         شخص
+code               n           n           V           V           T  ...           I           Y           Y           H           H
+value           Noun        Noun        Verb        Verb        Tool  ...  1st person  2nd person  2nd person  3rd person  3rd person
+ar_value         اسم         اسم         فعل         فعل        أداة  ...       متكلم       مخاطب       مخاطب        غائب        غائب
+inflect          اسم         اسم         فعل         فعل         حرف  ...                                                            
+
+[8 rows x 95 columns]
 ....
 ....
 
 ```
- You can load a specific config file by passing parameter to load_conf.
+You can load a specific config file by passing parameter to load_conf.
 If the file doesn't exist or failed to be open, the default config is loaded.
 
 ```python
@@ -187,60 +183,88 @@ configuer.load_config("tag.config", debug=True)
 ### Test call tagmaker
 
 ```python
-import mysam.tagmaker as tagmaker
-   
+import mysam.tagcoder
+# given tags as list    
 taglists = [[u'اسم', u'هاء', u'مجرور',],
         u'تعريف::مرفوع:متحرك:ينون:::'.split(":"),
         ]
+tgcoder = mysam.tagcoder.tagCoder()
 for taglist in taglists:
-tag_maker = tagmaker.tagMaker()
-# encode
-tag_maker.encode(taglist)
-print(u"+".join(taglist).encode('utf8'))
-tagstr = str(tag_maker)
-print(tagstr)
-# decode a unifed tag string
-print(tag_maker.decode())
+    # encode
+    tagcode = tgcoder.encode(taglist)
+    print("tags list:", u";".join(taglist))
+    print("tagcode:", tagcode)
+    # decode a tag code string into (key, values)
+    print("decode:", tgcoder.decode(tagcode))
 
 **** result ****
-
-اسم+هاء+مجرور
-N--;--I-;----;----
-[(u'نوع الكلمة', u'اسم'), (u'جنس', u'لاشيء'), (u'عدد', u'لاشيء'), (u'إعراب', u'مجرور'), (u'علامة', u'لاشيء'), (u'عطف', u'لاشيء'), (u'جر', u'لاشيء'), (u'تعريف', u'نكرة'), (u'ضمير متصل', u'لاشيء'), (u'استقبال', u'لاشيء'), (u'بناء', u'لاشيء'), (u'زمن', u'لاشيء'), (u'شخص', u'لاشيء')]
-تعريف++مرفوع+متحرك+ينون+++
----;--U-;--L-;----
-[(u'نوع الكلمة', u'لاشيء'), (u'جنس', u'لاشيء'), (u'عدد', u'لاشيء'), (u'إعراب', u'مرفوع'), (u'علامة', u'لاشيء'), (u'عطف', u'لاشيء'), (u'جر', u'لاشيء'), (u'تعريف', u'معرفة'), (u'ضمير متصل', u'لاشيء'), (u'استقبال', u'لاشيء'), (u'بناء', u'لاشيء'), (u'زمن', u'لاشيء'), (u'شخص', u'لاشيء')]
+tags list: اسم;هاء;مجرور
+tagcode: N--;------I;---
+decode: [('نوع الكلمة', 'اسم'), ('خاصية', 'لاشيء'), ('جنس', 'لاشيء'), ('عدد', 'لاشيء'), ('شخص', 'لاشيء'), ('علامة', 'لاشيء'), ('زمن', 'لاشيء'), ('بناء', 'لاشيء'), ('إعراب', 'مجرور'), ('عطف', 'لاشيء'), ('استقبال', 'لاشيء'), ('ضمير متصل', 'لاشيء')]
+tags list: تعريف;;مرفوع;متحرك;ينون;;;
+tagcode: ---;------U;--L
+decode: [('نوع الكلمة', 'لاشيء'), ('خاصية', 'لاشيء'), ('جنس', 'لاشيء'), ('عدد', 'لاشيء'), ('شخص', 'لاشيء'), ('علامة', 'لاشيء'), ('زمن', 'لاشيء'), ('بناء', 'لاشيء'), ('إعراب', 'مرفوع'), ('عطف', 'لاشيء'), ('استقبال', 'لاشيء'), ('تعريف', 'معرفة')]
     
 ```
 
 
 ### Exmaple for inflect
 ```python 
->>> tag_maker = tagmaker.tagMaker()
->>> tagcode = 'N--;--I-;----;---'
->>> print(tag_maker.inflect(tagcode).encode('utf8'))
-اسم مجرور وعلامة جرّه الياء لأنه جمع مذكر سالم وهو مضاف، والضمير المتصل مبني في محل جر مضاف إليه
+import mysam.taginflector
+tag_maker = mysam.taginflector.tagInflector()
+word = "يَسْتَعْمِلُونَهَا"
+tagcode = 'V-1;M3H-faU;W-H'
+print(tag_maker.inflect(tagcode))
+**** result ****
+فعل مضارع   مرفوع وعلامة رفعه ثبوت النون لأنه من الأفعال الخمسة  والواو: ضمير متصل مبني في محل رفع فاعل والضمير المتصل مبني في محل نصب مفعول به
 ```
 
 ### Exmaple for add tag
+
+Add a new tag to existing tags string code
+
 ```python
->>> tag_maker = tagmaker.tagMaker()
->>> tagcode = 'N--;--I-;----;---'
->>> tag_new = u"تعريف"
->>> tag_maker.add(tag_new)
->>> tag_new = u"اسم"
->>> tag_maker.add(tag_new)
->>> print(str(tag_maker).encode('utf8'))
-N--;----;--L-;----
+import mysam.tagcoder
+tag_coder = mysam.tagcoder.tagCoder()
+tagcode = 'V-0;M1H-faU;W--'
+tag = "ضمير متصل"
+print(tag_coder.add_tag(tag, tagcode))
+**** result ****
+V-0;M1H-faU;W-H
 ```
 
+### Exmaple for remove tag
+
+Remove and  a tag from existing tags string code
+
+```python
+import mysam.tagcoder
+tag_coder = mysam.tagcoder.tagCoder()
+tagcode = 'V-0;M1H-faU;W-H'
+tag = "ضمير متصل"
+print(tag_coder.remove_tag(tag, tagcode))
+**** result ****
+V-0;M1H-faU;W--
+```
+
+### 
+
 ### Exmaple for has tag
+
 ```python 
->>> tag_maker = tagmaker.tagMaker()
->>> tagcode = 'N--;--I-;----;---'
->>> tag_search = u"مجرور"
->>> print(tag_maker.has_tag(tag_search, tagcode))
+import mysam.tagcoder
+tag_coder = mysam.tagcoder.tagCoder()
+tags = ['اسم', 'مجرور', 'مذكر', "مفرد", "واو"]
+tagcode = tag_coder.encode(tags)
+print(tagcode)
+tag_search = u"مجرور"
+print(tag_coder.has_tag(tag_search, tagcode))
+tag_search = u"فعل"
+print(tag_coder.has_tag(tag_search, tagcode))
+**** result ****
+N--;M1----I;---
 True
+False
 ```
 
 
