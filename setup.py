@@ -4,15 +4,16 @@ from setuptools import setup
 # to install type:
 # python setup.py install --root=/
 def readme():
-    with open('README.rst') as f:
+    with open('README.md') as f:
         return f.read()
         
-setup (name='mysam-tagmanager', version='0.3.4',
+setup (name='mysam-tagmanager', version='0.4',
       author='Taha Zerrouki',
       author_email='taha_zerrouki@hotmail.com',
       url='http://pypi.python.com/projects/mysam-tagmanager/',
       license='GPL',
       description="Mysam: Arabic tags manager",
+      long_description_content_type='text/markdown',
       long_description = readme(),
       package_dir={'mysam': 'mysam'},
       packages=['mysam'],
