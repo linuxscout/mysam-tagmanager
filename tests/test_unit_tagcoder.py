@@ -108,5 +108,19 @@ class tagCoderTestCase(unittest.TestCase):
         inflect  = self.inflector.inflect(tagscode)
         self.assertEqual(expected_inflect, inflect, "Error on Inflection")
 
+    def test_word_addtag(self, ):
+        """ test word case"""
+        word = "ويحتاج"
+        tagscode = 'V-0;M1H-faU;W--'
+        expected_tagscode = 'V-0;M1H-faU;W-H'
+        new_tagscode  = self.mytagcoder.add_tag("ضمير متصل", tagscode)
+        self.assertEqual(expected_tagscode, new_tagscode, "Error on adding tag")
+
+        tagscode = 'V-0;M1H-faU;W-H'
+        expected_tagscode = 'V-0;M1H-faU;W--'
+        new_tagscode  = self.mytagcoder.remove_tag("ضمير متصل", tagscode)
+        self.assertEqual(expected_tagscode, new_tagscode, "Error on adding tag")
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -48,13 +48,12 @@ class tagCoder(tagmaker.tagMaker):
         """Encode  a tag list into string tag.
         
         Example:
-            >>> import mysam.tagmaker as tagmaker
-            >>> tag_maker = tagmaker.tagMaker()
-            >>> taglist = [u'اسم', u'مضير متصل', u'مجرور']
-            >>> tag_maker.encode(taglist)
-            >>> tagstr = str(tag_maker)
+            >>> import mysam.tagcoder
+            >>> tag_coder = mysam.tagcoder.tagCoder()
+            >>> taglist = [u'اسم', u'ضمير متصل', u'مجرور']
+            >>> tagstr = tag_coder.encode(taglist)
             >>> print(tagstr)
-            N--;--I-;----;----
+            N--;------I;--H
         
         @param taglist: an given tag list to be coded
         @type taglist: string list
@@ -73,12 +72,12 @@ class tagCoder(tagmaker.tagMaker):
     def decode(self, tagstring):
         """Decode a string tag to get all tags
         Example:
-            >>> import mysam.tagcoder as tagcoder
-            >>> tag_coder = tagcoder.tagCoder()
-            >>> tagcode = 'N--;--I-;----;---'
+            >>> import mysam.tagcoder
+            >>> tag_coder = mysam.tagcoder.tagCoder()
+            >>> tagcode = 'N--;--I-;----;--H'
             >>> print(tag_coder.decode(tagcode)))
-            [(u'نوع الكلمة', u'اسم'), (u'جنس', u'لاشيء'), (u'عدد', u'لاشيء'), (u'إعراب', u'مجرور'), (u'علامة', u'لاشيء'), (u'عطف', u'لاشيء'), (u'جر', u'لاشيء'), (u'تعريف', u'نكرة'), (u'ضمير متصل', u'لاشيء'), (u'استقبال', u'لاشيء'), (u'بناء', u'لاشيء'), (u'زمن', u'لاشي
-        
+            [('نوع الكلمة', 'اسم'), ('خاصية', 'لاشيء'), ('جنس', 'لاشيء'), ('عدد', 'لاشيء'), ('شخص', 'متكلم'), ('علامة', 'لاشيء'), ('عطف', 'لاشيء'), ('استقبال', 'لاشيء'), ('ضمير متصل', 'لاشيء')]
+
         @param tagstring: a string tag to be decoded, if not given, return null
         @type tagstring: string
         @return: tag list
@@ -90,23 +89,72 @@ class tagCoder(tagmaker.tagMaker):
             return self._decode(tagstring)
         return tags
 
-            
-if __name__ == "__main__":
-    taglists = [[u'اسم', u'هاء', u'مجرور',"مصدر"],
-                u'تعريف::مرفوع:متحرك:ينون:::'.split(":"),
-                u'المضارع المعلوم:هو:::n:'.split(":"),
-                u':مضاف:مجرور:متحرك:ينون:::'.split(':'),
-                ]
-    tag_maker = tagMaker("config/tag.config")
+    def add_tag(self, tag, tagstring):
+        """ Add new tag to th tagstring code
+        Example:
+            >>> import mysam.tagcoder
+            >>> tag_coder = mysam.tagcoder.tagCoder()
+            >>> tagcode = 'V-0;M1H-faU;W--'
+            >>> tag = "ضمير متصل"
+            >>> print(tag_coder.add_tag(tag, tagcode))
+            V-0;M1H-faU;W-H
 
-    for taglist in taglists:
-        tag_maker.reset()
-        tag_maker.encode(taglist)
-        print(u"+".join(taglist))
-        tagstr = str(tag_maker)
-        print(tagstr)
-        # decode a unifed tag string
-        print(tag_maker.repr(tag_maker.decode()))
+
+        @param tagstring: a string tag to be decoded, if not given, return null
+        @type tagstring: string
+        @return: tag list
+        @rtype: stringlist
+        """
+        if not tagstring:
+            return ""
+        else:
+            # decode the string
+            decoded_taglist = self._decode(tagstring)
+            # extract values
+            tag_values = [v for (k,v) in decoded_taglist]
+            # add tag to tag_values
+            if tag in tag_values:
+                return tagstring
+            else:
+                tag_values.append(tag)
+                # encode
+                return self.encode(tag_values)
+
+    def remove_tag(self, tag, tagstring):
+        """ remove a tag from tagstring code
+        Example:
+            >>> import mysam.tagcoder
+            >>> tag_coder = mysam.tagcoder.tagCoder()
+            >>> tagcode = 'V-0;M1H-faU;W-H'
+            >>> tag = "ضمير متصل"
+            >>> print(tag_coder.remove_tag(tag, tagcode))
+            V-0;M1H-faU;W--
+
+
+        @param tagstring: a string tag to be decoded, if not given, return null
+        @type tagstring: string
+        @return: tag list
+        @rtype: stringlist
+        """
+        if not tagstring:
+            return ""
+        else:
+            # decode the string
+            decoded_taglist = self._decode(tagstring)
+            # extract values
+            tag_values = [v for (k,v) in decoded_taglist]
+            # add tag to tag_values
+            if not tag in tag_values:
+                return tagstring
+            else:
+                tag_values.remove(tag)
+                # encode
+                return self.encode(tag_values)
+
+
+
+if __name__ == "__main__":
+    pass
     
     
     
