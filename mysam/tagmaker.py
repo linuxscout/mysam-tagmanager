@@ -399,7 +399,8 @@ class tagMaker:
         else:
             word_type = self.get_value(u'نوع الكلمة', tagstring)
             if word_type:
-                inflct.append(word_type)            
+                inflct.append(word_type)   
+        inflct = [t for t in inflct if t]
         return u" ".join(inflct)
 
     def has_tag(self, tag, tagstring = False):
