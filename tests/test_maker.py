@@ -22,8 +22,6 @@
 #  
 #  
 
-import sys
-sys.path.append('../mysam')
 
 import tagmaker
 import tagcoder

@@ -1,43 +1,62 @@
-#/usr/bin/sh
-# Build mysam-tagmanager
+.PHONY: help install develop clean lint format test coverage build publish
 
-default: all
-# Clean build files
-clean:
-	
-backup: 
-	
-#create all files 
-all: 
+PYTHON := python3
+PIP := pip
+
+help:
+	@echo "Available commands:"
+	@echo "  make install     - Install package"
+	@echo "  make develop     - Install package in editable mode"
+	@echo "  make clean       - Remove build and cache files"
+	@echo "  make lint        - Run linter (ruff)"
+	@echo "  make format      - Auto-format code (black)"
+	@echo "  make test        - Run tests with pytest"
+	@echo "  make coverage    - Run tests with coverage report"
+	@echo "  make build       - Build distribution packages"
+	@echo "  make upload     - Upload distribution to PyPI"
 
 install:
-	sudo python setup.py install
-install3:
-	sudo python3 setup.py install
+	$(PIP) install .
+
+develop:
+	$(PIP) install -e .[dev]
+
+clean:
+	rm -rf build/ dist/ *.egg-info
+	find . -name "__pycache__" -exec rm -rf {} +
+	find . -name "*.pyc" -delete
+
+lint:
+	ruff check .
+
+format:
+	black .
+
+test:
+	pytest -v
+
+coverage:
+	pytest --cov=mysam --cov-report=term-missing
+
+build:
+	$(PYTHON) -m build
+wheel:
+	sudo python3 setup.py bdist_wheel
+
 # Publish to github
 publish:
 	git push origin master 
 
-md2rst:
-	pandoc -s -r markdown -w rst README.md -o README.rst
-md2html:
-	pandoc -s -r markdown -w html README.md -o README.html
-	
-wheel:
-	sudo python3 setup.py bdist_wheel
-wheel3:
-	sudo python3 setup.py bdist_wheel
-sdist:
-	sudo python3 setup.py sdist
 upload:
 	echo "use twine upload dist/mysam-tagmanager-0.1.tar.gz"
 	
-test:
-	cd tests; python3 test_maker.py
-test_unit:
-	cd tests; python3 -m pytest test_unit_tagcoder.py
 tagsetdoc:
 	mv doc/tagset.md doc/tagset.md.bak
 	python3 tests/makedoc.py > doc/tagset.md
 doc:
 	epydoc -v --config epydoc.conf
+
+examples:
+	$(PYTHON) tests/examples/test_tagconfig.py
+	$(PYTHON) tests/examples/test_tagcoder.py
+	$(PYTHON) tests/examples/test_taginflector.py

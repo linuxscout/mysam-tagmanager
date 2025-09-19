@@ -21,15 +21,10 @@
 #  MA 02110-1301, USA.
 #  
 #  
-import sys
-sys.path.append("../")
-
-
 
 import pandas as pd
 
 import mysam.tagconfig as tagconfig
-import mysam.tag_const as tag_const
 
 configuer = tagconfig.tagConfig()
 configuer.load_config()
