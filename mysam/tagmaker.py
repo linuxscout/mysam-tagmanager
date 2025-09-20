@@ -24,12 +24,8 @@
 import os
 # ~ if __name__ == "__main__":
 
-try:
-    import tag_const 
-    import tagconfig
-except:
-    from . import tag_const 
-    from . import tagconfig
+from . import tag_const
+from . import tagconfig
 
     
 class tagMaker:

@@ -12,7 +12,7 @@
 
 كما تقدّم خدمة متميزة في  **الإعراب بالطريقة القديمة **
 
-![TAG STRINGS](doc/images/mysam_sample.png  "Example")
+![TAG STRINGS](docs/images/mysam_sample.png  "Example")
 
 * قائمة الوسوم :
     Noun, جامد, مضاف, مجرور, متحرك, ينون
@@ -49,7 +49,7 @@ The conversion can be do like:
 
 
 ### Tagging System description
-You can look at tagging descripton on [doc/tagset.md](doc/tagset.md)
+You can look at tagging descripton on [doc/tagset.md](docs/tagset.md)
 
 
   Developpers:  Taha Zerrouki: http://tahadz.com
@@ -118,7 +118,7 @@ or in bibtex format
 
 You can test it on [Mishkal Site](http://tahadz.com/mishkal), choose: Tashkeel, and move mouse over word to get hint.
 
-![mysam-tagmanager Demo](doc/images/mysam_demo.png)
+![mysam-tagmanager Demo](docs/images/mysam_demo.png)
 
 Installation
 =====

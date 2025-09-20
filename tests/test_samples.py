@@ -22,10 +22,6 @@
 #  
 #  
 
-import sys
-sys.path.append('../')
-sys.path.append('.')
-
 def main(args):
     # exmpale for encode
     import mysam.tagmaker as tagmaker
