@@ -23,7 +23,7 @@
 #  
 
 import pandas as pd
-
+import tabulate
 import mysam.tagconfig as tagconfig
 
 configuer = tagconfig.tagConfig()
@@ -32,4 +32,9 @@ configuer.load_config()
 df = pd.DataFrame(configuer.tagsdict)
 print('****tagdict ****')
 print(df)
+tags_dict = configuer.tagsdict
+
+print(tabulate.tabulate(configuer.tagsdict, headers="keys"))
+print(configuer.tagsdict)
+
 
