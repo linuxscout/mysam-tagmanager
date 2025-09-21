@@ -22,9 +22,6 @@
 #  
 #  
 
-import sys
-sys.path.append('../')
-sys.path.append('.')
 import mysam.tagmaker as tagmaker
 import mysam.tag_const as tag_const
 

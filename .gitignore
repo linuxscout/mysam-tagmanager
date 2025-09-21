@@ -1,6 +1,6 @@
 *.pyc
-doc/html/*
-/doc/tagset.md.bak
+docs/html/*
+/docs/tagset.md.bak
 tests/output/*
 tests/samples/*
 build/*

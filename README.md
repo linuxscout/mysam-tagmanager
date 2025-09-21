@@ -1,9 +1,10 @@
 # Mysam: Arabic tags manager, ميسم: إدارة الوسوم  العربية
-
+<div dir="rtl">
 تسيير وسوم الكلمات العربية في مجال المعالجة الآلية للغة،  ترميز وتفكيك
 هذه المكتبة توفر سكريبت خاصا بترميز وسوم الكلمات (الخصائص الصرفية والنحوية والدلالية) في عبارة وسم مختصرة على شكل سلسلة حروف قصيرة مرمّزة نسميها سلسلة الوسوم.
-يمكن التحويل بين قائمة الوسوم وسلسة الوسوم المختص
+يمكن التحويل بين قائمة الوسوم وسلسة الوسوم المختصرة
 يمكن الاستفادة من هذه المكتبة من أجل ترميز الوسوم وفك ترميزها، سنستعملها في :
+
 
  *  التحليل الصرفي ([مكتبة قلصادي](https://github.com/linuxscout/qalsadi) )
  * التحليل النحوي ( [مكتبة ثعلب](https://github.com/linuxscout/thaalab-aranasyn) )
@@ -12,7 +13,7 @@
 
 كما تقدّم خدمة متميزة في  **الإعراب بالطريقة القديمة **
 
-![TAG STRINGS](doc/images/mysam_sample.png  "Example")
+![TAG STRINGS](docs/images/mysam_sample.png  "Example")
 
 * قائمة الوسوم :
     Noun, جامد, مضاف, مجرور, متحرك, ينون
@@ -23,7 +24,7 @@
 
 ** هذه ليست مكتبة للتوسيم، بل لإدارة الوسوم في معالجة اللغة**
 
-
+</div>
 Manage arabic words tags, encode, decode
 This library provides a script to encode POS tags (Words features : morphology, syntax, semantic), as a brief tag string  called tag string.
 We can convert between tag list <==> coded tag string.
@@ -49,31 +50,34 @@ The conversion can be do like:
 
 
 ### Tagging System description
-You can look at tagging descripton on [doc/tagset.md](doc/tagset.md)
-
+You can look at tagging descripton on [docs/tagset.md](docs/tagset.md)
 
   Developpers:  Taha Zerrouki: http://tahadz.com
     taha dot zerrouki at gmail dot com
 
+
+
+![Downloads](https://img.shields.io/pypi/dm/mysam-tagmanager)
+![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen) ![](https://img.shields.io/pypi/v/mysam-tagmanager)
+
 Features |   value
 ------------|-----------
 Authors  | Taha Zerrouki: http://tahadz.com,  taha dot zerrouki at gmail dot com
-Release  | 0.4 
+Release  | ![](https://img.shields.io/pypi/v/mysam-tagmanager) 
 License  |[GPL](https://github.com/linuxscout/mysam-tagmanager/master/LICENSE)
-Tracker  |[linuxscout/mysam-tagmanager/Issues](https://github.com/linuxscout/mysam-tagmanager/issues)
-Website  |[https://pypi.python.org/pypi/mysam-tagmanager](https://pypi.python.org/pypi/mysam-tagmanager)
+Tracker  |![GitHub issues](https://img.shields.io/github/issues/linuxscout/mysam-tagmanager)[linuxscout/mysam-tagmanager/Issues](https://github.com/linuxscout/mysam-tagmanager/issues)
+Website  |[https://pypi.org/project/mysam-tagmanager/](https://pypi.org/project/mysam-tagmanager/)
 Source  |[Github](http://github.com/linuxscout/mysam-tagmanager)
 Feedbacks  |[Comments](https://github.com/linuxscout/mysam-tagmanager/issues)
-Accounts  |[@Twitter](https://twitter.com/linuxscout)  [@Sourceforge](http://sourceforge.net/projects/mysam-tagmanager/)
+Accounts  |[@Twitter](https://twitter.com/linuxscout)
 
-<!--Doc  |[package Documentaion](http://pythonhosted.org/mysam-tagmanager/)-->
-<!--Download  |[pypi.python.org](https://pypi.python.org/pypi/mysam-tagmanager)-->
+
 
 ## Citation
 If you would cite it in academic work, can you use this citation
 ```
 T. Zerrouki‏, mysam-tagmanager,  Arabic Word Tagger,
-  https://pypi.python.org/pypi/mysam-tagmanager/, 2018
+  https://pypi.org/projects/mysam-tagmanager/, 2018
 ```
 or in bibtex format
 
@@ -81,7 +85,7 @@ or in bibtex format
 @misc{zerrouki2018mysam,
   title={mysam-tagmanager : Arabic Word Tagger},
   author={Zerrouki, Taha},
-  url={https://pypi.python.org/pypi/mysam-tagmanager,
+  url={https://pypi.org/projects/mysam-tagmanager,
   year={2018}
 }
 ```
@@ -98,16 +102,14 @@ or in bibtex format
 * Generate a traditional inflection style
 
 ## Applications
-* Text summarizing.
-* Sentences identification.
+* Inflection إعراب
 * Grammar analysis.
 * Morphological analysis.
 
 ## تطبيقات 
-* التنقيب عن المعلومات.
-* التعرف على الجمل.
+* الإعراب
 * التحليل النحوي.
-* تسريع التحليل الصرفي.
+* التحليل الصرفي.
 
 
 
@@ -118,7 +120,7 @@ or in bibtex format
 
 You can test it on [Mishkal Site](http://tahadz.com/mishkal), choose: Tashkeel, and move mouse over word to get hint.
 
-![mysam-tagmanager Demo](doc/images/mysam_demo.png)
+![mysam-tagmanager Demo](docs/images/mysam_demo.png)
 
 Installation
 =====
@@ -128,7 +130,7 @@ pip install mysam-tagmanager
 ## Usage
 
 ```python
-import mysam.tagmaker as tagmaker
+from mysam import tagcoder
 ```
 ## Example
 
@@ -180,7 +182,7 @@ configuer = tagconfig.tagConfig()
 configuer.load_config("tag.config", debug=True)
 ```
 
-### Test call tagmaker
+### Test call tagCoder
 
 ```python
 import mysam.tagcoder
@@ -211,10 +213,10 @@ decode: [('نوع الكلمة', 'لاشيء'), ('خاصية', 'لاشيء'), ('
 ### Exmaple for inflect
 ```python 
 import mysam.taginflector
-tag_maker = mysam.taginflector.tagInflector()
+tag_inlfector = mysam.taginflector.tagInflector()
 word = "يَسْتَعْمِلُونَهَا"
 tagcode = 'V-1;M3H-faU;W-H'
-print(tag_maker.inflect(tagcode))
+print(tag_inlfector.inflect(tagcode))
 **** result ****
 فعل مضارع   مرفوع وعلامة رفعه ثبوت النون لأنه من الأفعال الخمسة  والواو: ضمير متصل مبني في محل رفع فاعل والضمير المتصل مبني في محل نصب مفعول به
 ```

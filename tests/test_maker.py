@@ -22,11 +22,9 @@
 #  
 #  
 
-import sys
-sys.path.append('../mysam')
 
-import tagmaker
-import tagcoder
+from mysam import tagmaker
+from mysam import tagcoder
 
 
 def main(args):

@@ -21,8 +21,6 @@
 #  MA 02110-1301, USA.
 #  
 #  
-import sys
-sys.path.append("../")
 
 
 

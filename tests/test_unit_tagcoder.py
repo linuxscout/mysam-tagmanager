@@ -22,14 +22,6 @@
 #  
 #  
 import unittest
-import sys
-import pprint
-# check if list are identical
-# using collections.Counter()
-import collections
-import pyarabic.araby as araby
-
-sys.path.append('../')
 import mysam.tagcoder
 import mysam.taginflector
 

@@ -21,7 +21,7 @@
 #  MA 02110-1301, USA.
 #  
 #  
-import mysam.tagmaker
+from mysam.tagcoder import tagCoder
 
 
 llist = [
@@ -34,7 +34,7 @@ llist = [
 ]
 def test():
     #~ mytagmaker = mysam.tagmaker.tagMaker("tag.config")
-    mytagmaker = mysam.tagmaker.tagMaker()
+    mytagmaker =tagCoder()
     for ll in llist:
         mytagmaker.reset()
         mytagmaker.encode(ll)

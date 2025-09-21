@@ -21,10 +21,6 @@
 #  MA 02110-1301, USA.
 #  
 #  
-
-import sys
-sys.path.append('../')
-sys.path.append('.')
 import mysam.tagconfig
 def main(args):
     import pandas as pd
@@ -38,5 +34,4 @@ def main(args):
     print(mdm.encode('utf8'))  
 
 if __name__ == '__main__':
-    import sys
-    sys.exit(main(sys.argv))
+    main()

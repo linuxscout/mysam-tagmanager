@@ -21,15 +21,10 @@
 #  MA 02110-1301, USA.
 #  
 #  
-import sys
-sys.path.append("../")
-
-
 
 import pandas as pd
-
+import tabulate
 import mysam.tagconfig as tagconfig
-import mysam.tag_const as tag_const
 
 configuer = tagconfig.tagConfig()
 configuer.load_config()
@@ -37,4 +32,9 @@ configuer.load_config()
 df = pd.DataFrame(configuer.tagsdict)
 print('****tagdict ****')
 print(df)
+tags_dict = configuer.tagsdict
+
+print(tabulate.tabulate(configuer.tagsdict, headers="keys"))
+print(configuer.tagsdict)
+
 
